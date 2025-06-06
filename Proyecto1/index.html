@@ -60,9 +60,34 @@
                         <img src="Img/10.jpeg">
                     </figure>
                 </div>
+                <div class="contenedor-imagen" id="img-vertical">
+                    <figure>
+                        <img src="Img/1.jpeg">
+                    </figure>
+                </div>
             </div>
+        </div>
+        <div class="instruccion-mobile">
+            Desliza
+        </div>
+        <!-- Modal para imagen vertical -->
+        <div id="modal-vertical" class="modal-vertical">
+            <span class="cerrar-modal" id="cerrar-modal-vertical">&times;</span>
+            <img id="img-modal-vertical" src="Img/1.jpeg" alt="Imagen vertical">
         </div>
     </body>
     <script src="galeria.js"></script>
+    <script>
+    // Modal vertical para imagen 1
+    document.getElementById('img-vertical').onclick = function() {
+        document.getElementById('modal-vertical').style.display = 'flex';
+    };
+    document.getElementById('cerrar-modal-vertical').onclick = function() {
+        document.getElementById('modal-vertical').style.display = 'none';
+    };
+    document.getElementById('modal-vertical').onclick = function(e) {
+        if (e.target === this) this.style.display = 'none';
+    };
+    </script>
 </html>
 
