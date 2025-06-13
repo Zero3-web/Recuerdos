@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zerotech</title>
+  <link rel="stylesheet" href="Css/style.css">
+  <link rel="stylesheet" href="Css/style.mobile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap');
+  </style>
+</head>
+<body>
+  
+<div class="carousel-container">
+    <div class="carousel" id="carousel">
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">1. Día que llegaste</div>
+                    <div class="gender">26 OCT 2021</div>
+                </div>
+                <div class="example">
+                    <img src="fotos/1.jpeg" alt="Foto 1">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">2. Primer canción que compartí</div>
+                    <div class="gender">28 OCT 2021</div>
+                </div>
+                <div class="example">
+                    <img src="fotos/2.jpeg" alt="Foto 2">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">3. ¿Primer Te Amo haha?</div>
+                    <div class="gender">5 NOV 2021</div>
+                </div>
+                <div class="example">
+                    <img src="fotos/3.jpeg" alt="Foto 3">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">4. Momento inolvidable</div>
+                    <div class="gender">12 DIC 2021</div>
+                </div>
+                <div class="example">
+                    <img src="fotos/4.jpeg" alt="Foto 4">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">5. Primer canción que me dedicas</div>
+                    <div class="gender">7 JUL 2024</div>
+                </div>
+                <div class="example">
+                    <img src="fotos/5.jpeg" alt="Foto 5">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">6. Canción actual que me hace pensar en ti</div>
+                    <div class="gender"></div>
+                </div>
+                <div class="example">
+                    <img src="fotos/6.jpeg" alt="Foto 6">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div>
+                    <div class="word">7. I love you, Feliz cumpleaños</div>
+                    <div class="gender">18 JUN 2025</div>
+                </div>
+                <div class="example">
+                    <img src="fotos/7.jpeg" alt="Foto 7">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="controls1">
+    <button class="prev" id="prev">←</button>
+    <button class="next" id="next">→</button>
+</div>
+
+<div class="music-player">
+    <h1>Save me</h1>
+    <p>BTS</p>
+    <audio id="song">
+        <source src="Music/BTS Save ME Lyrics (방탄소년단 Save ME 가사) [Color Coded LyricsHanRomEng].mp3" type="audio/mpeg" />
+    </audio>
+    <input type="range" value="0" id="progress" />
+    <div class="controls">
+        <button class="backward">
+            <i class="fa-solid fa-backward"></i>
+        </button>
+        <button class="play-pause-btn">
+            <i class="fa-solid fa-play" id="controlIcon"></i>
+        </button>
+        <button class="forward">
+            <i class="fa-solid fa-forward"></i>
+        </button>
+    </div>
+    <div class="timer">
+        <p id="timerText"></p>
+    </div>
+</div>
+
+<!-- Eliminado el bloque document.write(unescape(...)) que inyectaba HTML innecesario -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="Script/script.js"></script>
+  <script src="music.js"></script>
+</body>
+</html>
+

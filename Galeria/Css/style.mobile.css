@@ -1,0 +1,86 @@
+@media (max-width: 768px) {
+    .carousel-container {
+        max-width: 98vw;
+        height: 420px;
+    }
+    .card {
+        width: 90vw;
+        max-width: 340px;
+        min-width: 220px;
+        height: 270px;
+        margin: 0 auto;
+    }
+    .word {
+        font-size: 1.2em;
+    }
+    .gender {
+        font-size: 1em;
+    }
+    .meaning {
+        font-size: 1em;
+    }
+    .example, .translation {
+        font-size: 1em;
+    }
+    .example {
+        overflow: hidden;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .example img {
+        width: 96%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+    }
+    .controls1 button {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2em;
+        margin: 0 8px;
+    }
+    .controls1 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .music-player {
+        width: 98vw;
+        padding: 0px 1vw 0 1vw;
+        min-width: 0;
+        max-width: 100vw;
+        overflow: visible !important;
+        position: static !important;
+        z-index: auto !important;
+    }
+    .music-player .controls {
+        margin-top: -18px !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        position: static !important;
+        z-index: auto !important;
+    }
+    .music-player .play-pause-btn {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        position: static !important;
+        z-index: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .music-player .play-pause-btn i {
+        font-size: 1.5em !important;
+        display: inline-block !important;
+        position: static !important;
+        z-index: auto !important;
+    }
+    #progress {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
