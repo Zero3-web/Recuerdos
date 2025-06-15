@@ -68,6 +68,8 @@
             <span class="cerrar-modal" id="cerrar-modal-imagen1">&times;</span>
             <img src="Img/1.jpeg" alt="Imagen 1" class="modal-img">
         </div>
+        <audio id="background-music" src="musica/Contigo - El Canto del Loco ft  Natalia Lafourcade (Letra).mp3" preload="auto" loop style="display:none;"></audio>
+        <button id="music-toggle" style="position:fixed;bottom:20px;right:20px;z-index:1000;padding:12px 20px;font-size:18px;border-radius:50px;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,0.2);cursor:pointer;">Play Música</button>
     </body>
     <script src="galeria.js"></script>
     <script src="scroll-mobile.js"></script>
@@ -84,6 +86,33 @@
                 document.getElementById('galeria-principal').style.opacity = '1';
             }, 2000);
         }, 1000);
+    });
+
+    // Botón play/pause para música (solo control desde el botón, máxima compatibilidad)
+    document.addEventListener('DOMContentLoaded', function() {
+        var musicBtn = document.getElementById('music-toggle');
+        var audio = document.getElementById('background-music');
+        function updateMusicBtn() {
+            if (audio.paused) {
+                musicBtn.textContent = 'Play Música';
+            } else {
+                musicBtn.textContent = 'Pause Música';
+            }
+        }
+        musicBtn.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().catch(function(err) {
+                    // Si el navegador bloquea, puedes mostrar un mensaje si quieres
+                    // alert('Toca el botón nuevamente para activar la música.');
+                });
+            } else {
+                audio.pause();
+            }
+            updateMusicBtn();
+        });
+        audio.addEventListener('play', updateMusicBtn);
+        audio.addEventListener('pause', updateMusicBtn);
+        updateMusicBtn();
     });
     </script>
 </html>
