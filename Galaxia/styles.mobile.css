@@ -1,0 +1,110 @@
+/* Fondo y canvas */
+body {
+    /* ...existing code... */
+}
+
+#star-canvas {
+    width: 100vw;
+    height: 100vh;
+    /* ...existing code... */
+}
+
+/* Texto central más pequeño y con menos sombra */
+.center-text {
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    text-align: center;
+    z-index: 10; /* Aumentado */
+}
+.center-text h1 {
+    font-size: 8vw;
+    margin-bottom: 28px;
+}
+
+/* Planetas y astronauta más pequeños y reubicados */
+.planet-blue {
+    top: 30px;
+    left: 10px;
+    width: 60px;
+}
+.planet-purple {
+    left: 50%;
+    bottom: -90px;
+    width: 180px;
+    transform: translateX(-50%);
+    z-index: 1;
+    animation: spin 12s linear infinite;
+}
+.planet-orange {
+    top: 100px;
+    right: 90px;
+    width: 28px;
+    z-index: 3;
+}
+.planet-saturno {
+    left: 50%;
+    bottom: -70px;
+    width: 60px;
+    transform: translateX(-50%) rotate(0deg) translateY(-60px);
+    transform-origin: 50% 110px;
+    animation: orbit 24s linear infinite;
+    z-index: 3;
+}
+.astronaut {
+    top: 10px; /* Mover más arriba en mobile */
+    right: 10px;
+    width: 70px !important;
+    transform: rotate(-25deg);
+    z-index: 2; /* Menor que el texto */
+}
+
+/* Estrellas grandes con resplandor más pequeñas */
+.star-glow {
+    width: 18px;
+    height: 18px;
+    left: 18vw;
+    top: 60vh;
+}
+.star-glow2 {
+    width: 10px;
+    height: 10px;
+    left: 8vw;
+    top: 30vh;
+}
+.star-glow3 {
+    width: 7px;
+    height: 7px;
+    left: 70vw;
+    top: 10vh;
+}
+
+/* Ventanas del activador */
+.activate-windows {
+    bottom: -60px;
+    right: 10px;
+    /* ...existing code... */
+}
+
+/* Animaciones (igual que en desktop) */
+@keyframes spin {
+    100% { transform: translateX(-50%) rotate(360deg) translateY(-60px); }
+}
+
+/* Botón de música */
+.music-btn {
+    margin-top: 0;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 24px;
+}
+
+/* Estrellas extras igual que en desktop */
+.extra-stars {
+    /* ...existing code... */
+}
+.extra-stars span {
+    /* ...existing code... */
+}
+/* ...todas las clases .s1, .s2, ... .s30, etc igual que desktop... */

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nicolle❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+/* Animación para que el astronauta se mueva a la izquierda */
+@keyframes astronaut-move-right {
+    0% { right: 10px; }
+    100% { right: 60vw; }
+}
+.astronaut.move-right {
+    animation: astronaut-move-right 1.2s cubic-bezier(0.4,1.2,0.6,1) forwards;
+}
+
+/* Animación para que el astronauta suba un poco desde la posición final */
+@keyframes astronaut-move-up {
+    0% { top: 10px; }
+    100% { top: -40px; }
+}
+.astronaut.move-right.move-up {
+    animation:
+        astronaut-move-right 1.2s cubic-bezier(0.4,1.2,0.6,1) forwards,
+        astronaut-move-up 0.8s cubic-bezier(0.4,1.2,0.6,1) 1.2s forwards;
+}
+
+/* Transición suave para el texto "I love You Nicolle❤️" */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-in-up {
+    animation: fadeInUp 1.2s cubic-bezier(0.4,1.2,0.6,1) forwards;
+    opacity: 1 !important;
+}
+</style>
+</head>
+<body>
+    <div id="tsparticles"></div>
+    <img src="estrella.png" class="star-glow-img" style="top: 12%; left: 18%; width: 48px; height: 48px;">
+    <img src="estrella.png" class="star-glow-img" style="top: 40%; left: 70%; width: 80px; height: 80px;">
+    <img src="estrella.png" class="star-glow-img" style="top: 65%; left: 30%; width: 36px; height: 36px;">
+    <img src="estrella.png" class="star-glow-img" style="top: 80%; left: 80%; width: 72px; height: 72px;">
+    <canvas id="star-canvas"></canvas>
+    <div class="stars"></div>
+    <div class="stars-glow">
+        <div class="star-glow"></div>
+        <div class="star-glow2"></div>
+        <div class="star-glow3"></div>
+    </div>
+    <img src="planeta.png" class="planet planet-blue">
+    <img src="planeta grande.png" class="planet planet-purple">
+    <div class="center-text">
+        <h1 class="galaxy-shadow" style="display:none;">I love You <br>Nicolle❤️</h1>
+        <button id="play-music-btn" class="music-btn">Hola</button>
+        <h1 class="galaxy-shadow" id="birthday-message" style="display:none; position:fixed; left:50%; transform:translateX(-50%); top:98%; width:100vw;"></h1>
+        <audio id="audio-music" src="Zoe - Luna [Letra  video original].mp3"></audio>
+    </div>
+    <img src="saturno.png" class="planet planet-orange">
+    <img src="astronauta.png" class="astronaut">
+    <div class="extra-stars">
+        <span class="s1"></span>
+        <span class="s2"></span>
+        <span class="s3"></span>
+        <span class="s4"></span>
+        <span class="s5"></span>
+        <span class="s6"></span>
+        <span class="s7"></span>
+        <span class="s8"></span>
+        <span class="s9"></span>
+        <span class="s10"></span>
+        <span class="s11"></span>
+        <span class="s12"></span>
+        <span class="s13"></span>
+        <span class="s14"></span>
+        <span class="s15"></span>
+        <span class="s16"></span>
+        <span class="s17"></span>
+        <span class="s18"></span>
+        <span class="s19"></span>
+        <span class="s20"></span>
+        <span class="s21"></span>
+        <span class="s22"></span>
+        <span class="s23"></span>
+        <span class="s24"></span>
+        <span class="s25"></span>
+        <span class="s26"></span>
+        <span class="s27"></span>
+        <span class="s28"></span>
+        <span class="s29"></span>
+        <span class="s30"></span>
+        <!-- Puedes duplicar y cambiar posiciones para más estrellas -->
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+    <script src="particles-stars.js"></script>
+    <script src="stars.js"></script>
+    <script>
+document.getElementById('play-music-btn').onclick = function() {
+    var audio = document.getElementById('audio-music');
+    var astronaut = document.querySelector('.astronaut');
+    var h1 = document.querySelector('.center-text h1');
+    var birthdayMessage = document.getElementById('birthday-message');
+    if (audio.paused) {
+        audio.play();
+        this.textContent = "Pausar Música";
+        this.style.display = 'none'; // Ocultar el botón
+        if (typeof setStarsSpeed === 'function') setStarsSpeed(5);
+        // Animar astronauta y mostrar texto al terminar
+        astronaut.classList.add('move-right');
+        astronaut.addEventListener('animationend', function handler() {
+            h1.style.display = 'block';
+            h1.classList.add('fade-in-up'); // Agrega transición suave
+            // --- Astronauta sube un poco justo cuando aparece el texto principal ---
+            astronaut.classList.add('move-up');
+            setTimeout(function() {
+                typeBirthdayMessage();
+            }, 2000);
+            astronaut.removeEventListener('animationend', handler);
+        });
+    } else {
+        audio.pause();
+        this.textContent = "Reproducir Música";
+        if (typeof setStarsSpeed === 'function') setStarsSpeed(1);
+    }
+};
+
+function typeBirthdayMessage() {
+    var msg = 'FELIZ CUMPLEAÑOS';
+    var el = document.getElementById('birthday-message');
+    el.style.display = 'block';
+    el.textContent = '';
+    let i = 0;
+    function type() {
+        if (i < msg.length) {
+            el.textContent += msg.charAt(i);
+            i++;
+            setTimeout(type, 120);
+        } else {
+            launchFireworks();
+            // Ya no sube aquí, ahora sube antes
+        }
+    }
+    type();
+}
+
+// Fuegos artificiales simples en canvas
+function launchFireworks() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'fireworks-canvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = 100;
+    document.body.appendChild(canvas);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    function randomColor() {
+        const colors = ['#ffec00','#ff0080','#00ffe7','#ff4d00','#00ff2a','#a259ff','#fff'];
+        return colors[Math.floor(Math.random()*colors.length)];
+    }
+    function createFirework() {
+        const x = Math.random() * canvas.width * 0.8 + canvas.width*0.1;
+        const y = Math.random() * canvas.height * 0.4 + canvas.height*0.1;
+        const count = 32;
+        for(let i=0;i<count;i++){
+            const angle = (Math.PI*2/count)*i;
+            const speed = Math.random()*4+2;
+            particles.push({
+                x,y,
+                vx: Math.cos(angle)*speed,
+                vy: Math.sin(angle)*speed,
+                alpha: 1,
+                color: randomColor()
+            });
+        }
+    }
+    let fireworkCount = 0;
+    function animateFireworks() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(const p of particles){
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,3,0,Math.PI*2);
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.restore();
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vx *= 0.96;
+            p.vy *= 0.96;
+            p.alpha -= 0.018;
+        }
+        // Remove faded
+        for(let i=particles.length-1;i>=0;i--){
+            if(particles[i].alpha<=0) particles.splice(i,1);
+        }
+        if(fireworkCount<5 && Math.random()<0.08){
+            createFirework();
+            fireworkCount++;
+        }
+        if(particles.length>0){
+            requestAnimationFrame(animateFireworks);
+        }else{
+            document.body.removeChild(canvas);
+        }
+    }
+    createFirework();
+    animateFireworks();
+}
+</script>
+</body>
+</html>
+</body>
+</html>
