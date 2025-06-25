@@ -22,12 +22,13 @@ function initializeLoadingScreen() {
     window.addEventListener('load', function() {
         const currentTime = Date.now();
         const elapsedTime = currentTime - startTime;
-        const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
-        
-        setTimeout(() => {
+        const remainingTime = Math.max(0, minLoadingTime - elapsedTime);        setTimeout(() => {
             // Ocultar pantalla de carga
             loadingScreen.classList.add('hidden');
             isLoading = false;
+            
+            // Mostrar cubo persistente inmediatamente
+            showPersistentCube();
             
             // Eliminar elemento después de la transición
             setTimeout(() => {
@@ -75,14 +76,23 @@ function initializeApp() {
     // Inicializar animaciones de scroll
     setupScrollAnimations();
     
-    // Inicializar contadores
-    setupCounters();
+    // Inicializar contadores animados
+    initializeCounters();
+    
+    // Inicializar barras de habilidades
+    setupSkillBars();
+    
+    // Inicializar cubo persistente
+    initializePersistentCube();
     
     // Inicializar smooth scroll
     setupSmoothScroll();
     
     // Inicializar efectos adicionales
     initializeAdditionalEffects();
+    
+    // Inicializar loader navegacional
+    setupNavigationLoader();
     
     // Inicializar nuevos sistemas
     window.supportManager = new SupportManager();
@@ -146,7 +156,7 @@ function setupProjectFilters() {
 
 // Botones de descarga
 function setupDownloadButtons() {
-    const downloadButtons = document.querySelectorAll('.btn-download');
+    const downloadButtons = document.querySelectorAll('.button');
     
     downloadButtons.forEach(button => {
         button.addEventListener('click', (e) => {
@@ -160,8 +170,9 @@ function setupDownloadButtons() {
 // Modal de descarga
 function setupModal() {
     const modal = document.getElementById('downloadModal');
-    const closeBtn = document.querySelector('.close');
-    const downloadBtns = document.querySelectorAll('.download-btn');
+    const closeBtn = document.getElementById('modalClose');
+    const downloadOptions = document.querySelectorAll('.download-option');
+    const shareButtons = document.querySelectorAll('.share-btn');
 
     // Cerrar modal
     if (closeBtn) {
@@ -176,11 +187,20 @@ function setupModal() {
     });
 
     // Botones de descarga del modal
-    downloadBtns.forEach(btn => {
+    downloadOptions.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const type = btn.getAttribute('data-type');
             const projectId = modal.getAttribute('data-project');
             handleDownload(projectId, type);
+        });
+    });
+
+    // Botones de compartir del modal
+    shareButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const type = btn.getAttribute('data-type');
+            const projectId = modal.getAttribute('data-project');
+            handleShare(projectId, type);
         });
     });
 }
@@ -221,12 +241,31 @@ function handleDownload(projectId, type) {
         case 'codepen':
             openInCodePen(project);
             break;
+    }
+    
+    // No cerrar modal automáticamente para permitir ver instrucciones
+    showNotification('¡Descarga iniciada! Revisa las instrucciones abajo', 'success');
+}
+
+function handleShare(projectId, type) {
+    const project = projects[projectId];
+    
+    if (!project) {
+        showNotification('Proyecto no encontrado', 'error');
+        return;
+    }
+
+    switch (type) {
         case 'whatsapp':
             shareOnWhatsApp(project, projectId);
             break;
+        case 'instagram':
+            shareOnInstagram(project, projectId);
+            break;
+        case 'tiktok':
+            shareOnTikTok(project, projectId);
+            break;
     }
-    
-    closeModal();
 }
 
 function downloadHTMLFile(project, projectId) {
@@ -296,6 +335,46 @@ function shareOnWhatsApp(project, projectId) {
     showNotification('Compartiendo en WhatsApp...', 'success');
 }
 
+function shareOnInstagram(project, projectId) {
+    const message = encodeURIComponent(
+        `🎨 ¡Increíble animación CSS!\n\n` +
+        `✨ ${project.name}\n` +
+        `📝 ${project.description}\n\n` +
+        `🔗 Descarga gratis en: https://zerotech.shop\n` +
+        `📺 Tutoriales: @zero_exploit3\n` +
+        `#CSS #Animaciones #WebDev #ZeroTech #Programming`
+    );
+    
+    // Instagram no permite links directos, así que copiamos el mensaje
+    navigator.clipboard.writeText(decodeURIComponent(message)).then(() => {
+        showNotification('¡Mensaje copiado! Pégalo en Instagram', 'success');
+        // Abrir Instagram web
+        window.open('https://www.instagram.com/zero_exploit3/', '_blank');
+    }).catch(() => {
+        showNotification('Ve a @zero_exploit3 en Instagram', 'info');
+        window.open('https://www.instagram.com/zero_exploit3/', '_blank');
+    });
+}
+
+function shareOnTikTok(project, projectId) {
+    const message = encodeURIComponent(
+        `🎨 Animación CSS increíble!\n\n` +
+        `✨ ${project.name}\n` +
+        `🔗 Link en bio: zerotech.shop\n` +
+        `#CSS #Animaciones #WebDev #Programming #TikTok`
+    );
+    
+    // TikTok no permite links directos, así que copiamos el mensaje
+    navigator.clipboard.writeText(decodeURIComponent(message)).then(() => {
+        showNotification('¡Mensaje copiado! Pégalo en TikTok', 'success');
+        // Abrir TikTok web
+        window.open('https://www.tiktok.com/@zero_exploit', '_blank');
+    }).catch(() => {
+        showNotification('Ve a @zero_exploit en TikTok', 'info');
+        window.open('https://www.tiktok.com/@zero_exploit', '_blank');
+    });
+}
+
 // Notificaciones
 function showNotification(message, type = 'info') {
     // Crear elemento de notificación si no existe
@@ -360,7 +439,7 @@ function setupScrollAnimations() {
     }, observerOptions);
 
     // Observar elementos que deben animarse
-    const animateElements = document.querySelectorAll('.project-card, .tutorial-card, .section-header');
+    const animateElements = document.querySelectorAll('.project-card, .tutorial-card, .section-header, .skill-item, .highlight-card, .about-visual');
     animateElements.forEach(el => {
         el.classList.add('scroll-reveal');
         observer.observe(el);
@@ -405,6 +484,55 @@ function animateCounter(counter) {
         // Formatear número con separadores de miles
         counter.textContent = Math.floor(current).toLocaleString();
     }, 16);
+}
+
+// Animación de barras de habilidades
+function setupSkillBars() {
+    const skillBars = document.querySelectorAll('.skill-bar');
+    
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px'
+    };
+
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkillBar(entry.target);
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    skillBars.forEach(bar => {
+        skillObserver.observe(bar);
+    });
+}
+
+function animateSkillBar(bar) {
+    const level = parseInt(bar.getAttribute('data-level'));
+    bar.style.width = '0%';
+    
+    // Usar requestAnimationFrame para una animación más suave
+    let start = null;
+    const duration = 1500; // 1.5 segundos
+    
+    function step(timestamp) {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        
+        // Usar una función de easing para hacer la animación más natural
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+        const currentWidth = level * easeOutCubic;
+        
+        bar.style.width = currentWidth + '%';
+        
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        }
+    }
+    
+    requestAnimationFrame(step);
 }
 
 // Smooth scroll
@@ -540,14 +668,18 @@ class ThemeManager {
     initTheme() {
         this.applyTheme();
     }    applyTheme() {
+        const themeToggle = document.getElementById('themeToggle');
+        
         if (this.currentTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeToggle) themeToggle.checked = true;
         } else {
             document.documentElement.removeAttribute('data-theme');
+            if (themeToggle) themeToggle.checked = false;
         }
         this.updateHeaderOnThemeChange();
         this.updateThemeToggleLabel();
-    }    updateThemeToggleLabel() {
+    }updateThemeToggleLabel() {
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             const label = this.currentTheme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro';
@@ -578,12 +710,10 @@ class ThemeManager {
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
             }
         }
-    }
-
-    bindEvents() {
+    }    bindEvents() {
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
-            themeToggle.addEventListener('click', () => this.toggleTheme());
+            themeToggle.addEventListener('change', () => this.toggleTheme());
         }
 
         // Update header on scroll with theme consideration
@@ -731,6 +861,103 @@ class FloatingSupportAnimation {
     }
 }
 
+// ==============================================
+// ANIMACIÓN DE CONTADORES
+// ==============================================
+
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach((counter, index) => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const stat = counter.closest('.stat');
+        
+        // Agregar delay escalonado para cada contador
+        setTimeout(() => {
+            animateCounter(counter, target, stat);
+        }, index * 200); // 200ms de delay entre cada contador
+    });
+}
+
+function animateCounter(element, target, statElement) {
+    const duration = 2000; // 2 segundos para la animación
+    const steps = 60; // 60 pasos para suavidad
+    const increment = target / steps;
+    const stepDuration = duration / steps;
+    
+    let current = 0;
+    
+    // Agregar clase de conteo
+    element.classList.add('counting');
+    statElement.classList.add('counting');
+    
+    const timer = setInterval(() => {
+        current += increment;
+        
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+            
+            // Remover clase de conteo y agregar clase final
+            element.classList.remove('counting');
+            statElement.classList.remove('counting');
+            element.classList.add('finished');
+            
+            // Remover clase final después de la animación
+            setTimeout(() => {
+                element.classList.remove('finished');
+            }, 500);
+        }
+        
+        // Actualizar el texto según el tipo de contador
+        updateCounterText(element, Math.floor(current), target);
+    }, stepDuration);
+}
+
+function updateCounterText(element, current, target) {
+    const originalText = element.textContent;
+    
+    if (originalText.includes('Descargas')) {
+        if (current >= 1000) {
+            element.textContent = `${Math.floor(current/1000)},${String(current % 1000).padStart(3, '0')}+ Descargas`;
+        } else {
+            element.textContent = `${current}+ Descargas`;
+        }
+    } else if (originalText.includes('Proyectos')) {
+        element.textContent = `${current} Proyectos`;
+    } else if (originalText.includes('Gratis')) {
+        element.textContent = `${current}% Gratis`;
+    }
+}
+
+// Función para detectar cuando los contadores entran en la vista
+function setupCounterObserver() {
+    const heroStats = document.querySelector('.hero-stats');
+    
+    if (!heroStats) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Esperar un poco después de que aparezcan las animaciones de texto
+                setTimeout(() => {
+                    animateCounters();
+                }, 1000);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5 // Iniciar cuando el 50% del elemento es visible
+    });
+    
+    observer.observe(heroStats);
+}
+
+// Inicializar observador de contadores después de que se carga la página
+function initializeCounters() {
+    setupCounterObserver();
+}
+
 // Exportar funciones para uso global si es necesario
 window.ZeroTech = {
     openDownloadModal,
@@ -738,3 +965,365 @@ window.ZeroTech = {
     showNotification,
     trackEvent
 };
+
+// ==============================================
+// CUBO 3D PERSISTENTE
+// ==============================================
+
+function showPersistentCube() {
+    const persistentCube = document.getElementById('persistentCube');
+    
+    if (!persistentCube) return;
+    
+    // Agregar clase de caída desde arriba
+    persistentCube.classList.add('falling');
+    persistentCube.classList.add('visible');
+    
+    // Remover clase de caída después de la animación
+    setTimeout(() => {
+        persistentCube.classList.remove('falling');
+    }, 1200);
+}
+
+function hidePersistentCube() {
+    const persistentCube = document.getElementById('persistentCube');
+    
+    if (!persistentCube) return;
+    
+    persistentCube.classList.remove('visible');
+}
+
+// Función para cambiar posición del cubo (opcional)
+function toggleCubePosition() {
+    const persistentCube = document.getElementById('persistentCube');
+    
+    if (!persistentCube) return;
+    
+    persistentCube.classList.toggle('top-right');
+}
+
+// Función para crear el efecto de salpicadura de cubitos
+function createCubeSplash(clickX, clickY) {
+    const numCubes = 8; // Número de cubitos que salpican
+    const colors = ['#5865F2', '#7289DA', '#8B9CF7', '#A8B5FF', '#6B73FF', '#4752C4'];
+    
+    for (let i = 0; i < numCubes; i++) {
+        const miniCube = document.createElement('div');
+        miniCube.className = 'mini-cube';
+        
+        // Posición inicial en el punto de click
+        miniCube.style.left = clickX + 'px';
+        miniCube.style.top = clickY + 'px';
+        
+        // Color aleatorio del array
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        miniCube.style.background = randomColor;
+        miniCube.style.boxShadow = `0 0 10px ${randomColor}`;
+        
+        // Dirección aleatoria para el salpique
+        const angle = (360 / numCubes) * i + (Math.random() - 0.5) * 60; // Ángulo base + variación
+        const velocity = 100 + Math.random() * 150; // Velocidad aleatoria
+        
+        const radians = angle * Math.PI / 180;
+        const velocityX = Math.cos(radians) * velocity;
+        const velocityY = Math.sin(radians) * velocity;
+        
+        // Agregar variables CSS para la animación
+        miniCube.style.setProperty('--velocity-x', velocityX + 'px');
+        miniCube.style.setProperty('--velocity-y', velocityY + 'px');
+        miniCube.style.setProperty('--rotation', Math.random() * 720 + 'deg');
+        
+        // Agregar al DOM
+        document.body.appendChild(miniCube);
+        
+        // Activar animación
+        requestAnimationFrame(() => {
+            miniCube.classList.add('splash-active');
+        });
+        
+        // Remover después de la animación
+        setTimeout(() => {
+            if (miniCube.parentNode) {
+                miniCube.parentNode.removeChild(miniCube);
+            }
+        }, 1500);
+    }
+}
+
+// Inicializar cubo persistente
+function initializePersistentCube() {
+    const persistentCube = document.getElementById('persistentCube');
+    
+    if (!persistentCube) return;
+    
+    // Agregar eventos de interacción si se desea
+    persistentCube.addEventListener('click', (e) => {
+        // Efecto de salpicadura de cubitos
+        createCubeSplash(e.clientX, e.clientY);
+        
+        // Efecto de shake en el cubo principal
+        persistentCube.classList.add('cube-shake');
+        setTimeout(() => {
+            persistentCube.classList.remove('cube-shake');
+        }, 600);
+        
+        console.log('Cubo clickeado! 🎯');
+    });
+    
+    // Opcional: ocultar/mostrar cubo con tecla específica
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'c' && e.ctrlKey) {
+            e.preventDefault();
+            persistentCube.classList.toggle('visible');
+        }
+    });    // Efecto de desplazamiento lateral en scroll con throttle para rendimiento
+    let scrollTimeout;
+    
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const parallaxSpeed = 0.2; // Velocidad del parallax más sutil
+        const lateralSpeed = 0.5; // Velocidad del desplazamiento lateral aumentada aún más
+        const maxLateralOffset = 600; // Límite máximo de desplazamiento lateral aumentado (px)
+        const isVisible = persistentCube.classList.contains('visible');
+        const isFalling = persistentCube.classList.contains('falling');
+        
+        // Solo aplicar efectos si no está en animación de caída
+        if (!isFalling && isVisible) {
+            // Usar requestAnimationFrame para suavizar la animación
+            if (scrollTimeout) {
+                cancelAnimationFrame(scrollTimeout);
+            }
+            
+            scrollTimeout = requestAnimationFrame(() => {
+                // Calcular el offset del parallax y el desplazamiento lateral
+                const parallaxOffset = scrollY * parallaxSpeed;
+                let lateralOffset = scrollY * lateralSpeed;
+                
+                // Limitar el desplazamiento lateral para que no desaparezca completamente
+                lateralOffset = Math.min(lateralOffset, maxLateralOffset);
+                
+                // Mover el cubo más hacia la izquierda conforme se hace scroll
+                // El valor negativo mueve hacia la izquierda
+                persistentCube.style.transform = `translateY(calc(-90% + ${parallaxOffset}px)) translateX(-${lateralOffset}px) scale(1)`;
+            });
+        }
+    });
+}
+
+// ==============================================
+// LOADER NAVEGACIONAL GLOBAL
+// ==============================================
+
+function setupNavigationLoader() {
+    const navLoader = document.getElementById('navLoader');
+    
+    if (!navLoader) return;
+    
+    // Interceptar todos los enlaces de navegación
+    const navLinks = document.querySelectorAll('a[href]');
+    
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Solo interceptar enlaces internos del sitio (no externos, no emails, no anchors)
+        if (href && 
+            !href.startsWith('http') && 
+            !href.startsWith('mailto:') && 
+            !href.startsWith('tel:') && 
+            !href.startsWith('#') &&
+            href.endsWith('.html')) {
+            
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showNavigationLoader();
+                
+                // Simular carga mínima para mejor UX
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 800); // 800ms para mostrar la animación
+            });
+        }
+    });
+}
+
+function showNavigationLoader() {
+    const navLoader = document.getElementById('navLoader');
+    if (navLoader) {
+        navLoader.classList.add('active');
+    }
+}
+
+function hideNavigationLoader() {
+    const navLoader = document.getElementById('navLoader');
+    if (navLoader) {
+        navLoader.classList.remove('active');
+    }
+}
+
+// Ocultar loader cuando la página se carga completamente
+window.addEventListener('load', () => {
+    hideNavigationLoader();
+});
+
+// También ocultar si el usuario regresa con el botón atrás
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        hideNavigationLoader();
+    }
+});
+
+// ===================================
+// CONTACT FORM FUNCTIONALITY
+// ===================================
+
+// Initialize contact form when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeContactForm();
+});
+
+function initializeContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const captchaCheckbox = document.getElementById('captcha');
+    
+    if (!contactForm) return;
+    
+    // Enable/disable submit button based on captcha
+    if (captchaCheckbox && submitBtn) {
+        function updateSubmitButton() {
+            const formValid = contactForm.checkValidity();
+            const captchaChecked = captchaCheckbox.checked;
+            
+            if (formValid && captchaChecked) {
+                submitBtn.disabled = false;
+                submitBtn.style.background = '#6366f1';
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.style.background = '#9ca3af';
+            }
+        }
+        
+        // Check form validity on input changes
+        contactForm.addEventListener('input', updateSubmitButton);
+        contactForm.addEventListener('change', updateSubmitButton);
+        captchaCheckbox.addEventListener('change', updateSubmitButton);
+        
+        // Initial check
+        updateSubmitButton();
+    }
+    
+    // Form submission
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleFormSubmission(this);
+    });
+}
+
+function handleFormSubmission(form) {
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    submitBtn.style.background = '#9ca3af';
+    
+    // Remove any existing messages
+    removeFormMessages();
+    
+    // Simulate form submission (replace with actual form handler)
+    setTimeout(() => {
+        // For demo purposes, we'll show success
+        // In a real implementation, you would send the data to your server
+        
+        const success = Math.random() > 0.1; // 90% success rate for demo
+        
+        if (success) {
+            showFormMessage('Message sent successfully! We\'ll get back to you in 24h.', 'success');
+            form.reset();
+            
+            // Reset captcha
+            const captcha = document.getElementById('captcha');
+            if (captcha) captcha.checked = false;
+        } else {
+            showFormMessage('There was an error sending your message. Please try again.', 'error');
+        }
+        
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = true;
+        submitBtn.style.background = '#9ca3af';
+        
+    }, 2000); // Simulate 2 second delay
+}
+
+function showFormMessage(message, type) {
+    const form = document.getElementById('contactForm');
+    
+    // Create message element
+    const messageEl = document.createElement('div');
+    messageEl.className = `form-message ${type}`;
+    messageEl.style.cssText = `
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        ${type === 'success' 
+            ? 'background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;' 
+            : 'background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;'
+        }
+    `;
+    messageEl.textContent = message;
+    
+    // Insert at the top of the form
+    form.insertBefore(messageEl, form.firstChild);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (messageEl.parentNode) {
+            messageEl.parentNode.removeChild(messageEl);
+        }
+    }, 5000);
+}
+
+function removeFormMessages() {
+    const messages = document.querySelectorAll('.form-message');
+    messages.forEach(message => {
+        if (message.parentNode) {
+            message.parentNode.removeChild(message);
+        }
+    });
+}
+
+// Add smooth scroll to contact section when contact links are clicked
+document.addEventListener('DOMContentLoaded', function() {
+    // Update existing contact links to scroll to contact form
+    const contactLinks = document.querySelectorAll('a[href="mailto:hola@zerotech.shop"]');
+    
+    contactLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Focus on the topic field after scrolling
+                setTimeout(() => {
+                    const topicField = document.getElementById('contactTopic');
+                    if (topicField) {
+                        topicField.focus();
+                    }
+                }, 1000);
+            }
+        });
+    });
+});
+
+// ===================================
+// END CONTACT FORM FUNCTIONALITY
+// ===================================

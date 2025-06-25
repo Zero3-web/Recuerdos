@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los Proyectos - ZeroTech</title>
+    <meta name="description" content="Explora todos nuestros proyectos de animaciones CSS. Más de 15 animaciones gratuitas listas para descargar y usar.">
+    
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="Todos los Proyectos - ZeroTech">
+    <meta property="og:description" content="Explora todos nuestros proyectos de animaciones CSS. Más de 15 animaciones gratuitas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zerotech.shop/proyectos.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/phosphor-icons@1.4.2/src/css/phosphor.css">
+</head>
+<body>
+    <!-- Navigation Loader -->
+    <div id="navLoader" class="nav-loader">
+        <div class="container">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <i class="ph-code ph-bold"></i>
+                        <h2>ZeroTech</h2>
+                    </a>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">
+                        <i class="ph-house ph-bold"></i>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="sobre-mi.html" class="nav-link">
+                        <i class="ph-user ph-bold"></i>
+                        <span>Sobre mí</span>
+                    </a>
+                    <a href="proyectos.html" class="nav-link active">
+                        <i class="ph-folders ph-bold"></i>
+                        <span>Proyectos</span>
+                    </a>
+                    <a href="index.html#contact" class="nav-link">
+                        <i class="ph-envelope ph-bold"></i>
+                        <span>Contacto</span>
+                    </a>
+                </div>
+                
+                <div class="nav-actions">
+                    <div class="toggle-wrapper">
+                        <input class="toggle-checkbox" type="checkbox" id="themeToggle" aria-label="Cambiar a tema oscuro">
+                        <div class="toggle-container">  
+                            <div class="toggle-button">
+                                <div class="toggle-button-circles-container">
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                    <div class="toggle-button-circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="mailto:hola@zerotech.shop" class="youtube-btn">
+                        <i class="ph-envelope ph-bold"></i>
+                        <span>Contáctame</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Projects Hero Section -->
+    <section class="projects-hero">
+        <div class="container">
+            <div class="projects-hero-content">
+                <div class="breadcrumb">
+                    <a href="index.html">
+                        <i class="ph-house ph-bold"></i>
+                        Inicio
+                    </a>
+                    <i class="ph-caret-right ph-bold"></i>
+                    <span>Proyectos</span>
+                </div>
+                
+                <h1 class="projects-hero-title">
+                    Todos los <span class="gradient-text">Proyectos</span>
+                </h1>
+                <p class="projects-hero-subtitle">
+                    Explora nuestra colección completa de animaciones CSS. Más de 15+ proyectos listos para descargar y usar en tus sitios web.
+                </p>
+                
+                <div class="projects-stats">
+                    <div class="stat">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Animaciones</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Gratis</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5k+</span>
+                        <span class="stat-label">Descargas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <!-- Filter Buttons -->
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="ph-selection-all ph-bold"></i>
+                        <span>Todos</span>
+                    </button>
+                    <button class="filter-btn" data-filter="animations">
+                        <i class="ph-play ph-bold"></i>
+                        <span>Animaciones</span>
+                    </button>
+                    <button class="filter-btn" data-filter="effects">
+                        <i class="ph-magic-wand ph-bold"></i>
+                        <span>Efectos</span>
+                    </button>
+                    <button class="filter-btn" data-filter="buttons">
+                        <i class="ph-hand-pointing ph-bold"></i>
+                        <span>Botones</span>
+                    </button>
+                    <button class="filter-btn" data-filter="cards">
+                        <i class="ph-cards ph-bold"></i>
+                        <span>Tarjetas</span>
+                    </button>
+                    <button class="filter-btn" data-filter="loaders">
+                        <i class="ph-spinner ph-bold"></i>
+                        <span>Loaders</span>
+                    </button>
+                </div>
+                <div class="sort-options">
+                    <select id="sortSelect">
+                        <option value="name">Ordenar por nombre</option>
+                        <option value="popularity">Más populares</option>
+                        <option value="recent">Más recientes</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card" data-category="animations" data-popularity="95" data-recent="2024-01-15">
+                    <div class="project-preview">
+                        <div class="demo-animation heart-demo">
+                            <i class="ph-heart ph-fill"></i>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Corazón Latiendo</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    324
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    95
+                                </span>
+                            </div>
+                        </div>
+                        <p>Animación de corazón con efecto de latido realista usando keyframes CSS</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-file-html ph-bold"></i>
+                                HTML
+                            </span>
+                            <span class="tag">
+                                <i class="ph-heart ph-bold"></i>
+                                Romance
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="heart">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="heart">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="heart">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card" data-category="effects" data-popularity="87" data-recent="2024-01-10">
+                    <div class="project-preview">
+                        <div class="demo-animation pulse-demo">
+                            <div class="pulse-circle"></div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Efecto Pulso</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    278
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    87
+                                </span>
+                            </div>
+                        </div>
+                        <p>Animación de pulso con ondas expansivas perfecta para botones y notificaciones</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-lightning ph-bold"></i>
+                                Keyframes
+                            </span>
+                            <span class="tag">
+                                <i class="ph-pulse ph-bold"></i>
+                                Efecto
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="pulse">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="pulse">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="pulse">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card" data-category="buttons" data-popularity="92" data-recent="2024-01-12">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <button class="animated-button">
+                                <span>Hover Me</span>
+                                <div class="button-effect"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Botón Animado</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    412
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    92
+                                </span>
+                            </div>
+                        </div>
+                        <p>Botón moderno con efectos de hover, brillo y transiciones suaves</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-hand-pointing ph-bold"></i>
+                                Interactive
+                            </span>
+                            <span class="tag">
+                                <i class="ph-sparkle ph-bold"></i>
+                                Hover
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="button">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="button">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="button">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card" data-category="cards" data-popularity="78" data-recent="2024-01-08">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="flip-card">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <i class="ph-star ph-fill"></i>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <i class="ph-heart ph-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Tarjeta Flip</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    198
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    78
+                                </span>
+                            </div>
+                        </div>
+                        <p>Tarjeta con efecto de volteo en 3D perfecto para mostrar información adicional</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-cube ph-bold"></i>
+                                3D
+                            </span>
+                            <span class="tag">
+                                <i class="ph-cards ph-bold"></i>
+                                Card
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="flip-card">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="flip-card">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="flip-card">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card" data-category="loaders" data-popularity="89" data-recent="2024-01-14">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="loading-animation">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Loading Dots</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    356
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    89
+                                </span>
+                            </div>
+                        </div>
+                        <p>Animación de carga con puntos saltando ideal para pantallas de carga</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-spinner ph-bold"></i>
+                                Loading
+                            </span>
+                            <span class="tag">
+                                <i class="ph-dots-three ph-bold"></i>
+                                Dots
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="loading">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="loading">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="loading">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card" data-category="effects" data-popularity="84" data-recent="2024-01-11">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="gradient-text-demo">
+                                <span>Gradient</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Texto Gradiente</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    267
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    84
+                                </span>
+                            </div>
+                        </div>
+                        <p>Texto con gradiente animado y efectos de brillo que cambia de colores</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-palette ph-bold"></i>
+                                Gradient
+                            </span>
+                            <span class="tag">
+                                <i class="ph-text-aa ph-bold"></i>
+                                Typography
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="gradient-text">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="gradient-text">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="gradient-text">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7 - Neon Button -->
+                <div class="project-card" data-category="buttons" data-popularity="91" data-recent="2024-01-16">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <button class="neon-button">
+                                <span>NEON</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Botón Neón</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    189
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    91
+                                </span>
+                            </div>
+                        </div>
+                        <p>Botón con efectos de neón brillante y animaciones eléctricas</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-lightning ph-bold"></i>
+                                Neon
+                            </span>
+                            <span class="tag">
+                                <i class="ph-sparkle ph-bold"></i>
+                                Glow
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="neon-button">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="neon-button">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="neon-button">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8 - Wave Loader -->
+                <div class="project-card" data-category="loaders" data-popularity="86" data-recent="2024-01-17">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="wave-loader">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                                <div class="wave"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Wave Loader</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    143
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    86
+                                </span>
+                            </div>
+                        </div>
+                        <p>Loader con ondas fluidas perfecto para aplicaciones modernas</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-wave-sine ph-bold"></i>
+                                Wave
+                            </span>
+                            <span class="tag">
+                                <i class="ph-spinner ph-bold"></i>
+                                Fluid
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="wave-loader">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="wave-loader">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="wave-loader">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9 - Glow Card -->
+                <div class="project-card" data-category="cards" data-popularity="88" data-recent="2024-01-18">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="glow-card">
+                                <i class="ph-magic-wand ph-fill"></i>
+                                <h4>Glow</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Tarjeta Brillante</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    234
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    88
+                                </span>
+                            </div>
+                        </div>
+                        <p>Tarjeta con efectos de brillo y resplandor que sigue el cursor</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-sparkle ph-bold"></i>
+                                Glow
+                            </span>
+                            <span class="tag">
+                                <i class="ph-cards ph-bold"></i>
+                                Card
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="glow-card">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="glow-card">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="glow-card">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 10 - Floating Animation -->
+                <div class="project-card" data-category="animations" data-popularity="79" data-recent="2024-01-19">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="floating-element">
+                                <i class="ph-cloud ph-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Elemento Flotante</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    156
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    79
+                                </span>
+                            </div>
+                        </div>
+                        <p>Animación suave de flotación perfecta para elementos de diseño</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-wind ph-bold"></i>
+                                Float
+                            </span>
+                            <span class="tag">
+                                <i class="ph-play ph-bold"></i>
+                                Animation
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="floating">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="floating">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="floating">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 11 -->
+                <div class="project-card" data-category="animations" data-popularity="82" data-recent="2024-01-20">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="bounce-text-demo">
+                                <span>B</span><span>o</span><span>u</span><span>n</span><span>c</span><span>e</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Texto Rebotador</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    195
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    82
+                                </span>
+                            </div>
+                        </div>
+                        <p>Animación de texto con efecto de rebote letra por letra con timing personalizado</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-text-aa ph-bold"></i>
+                                Typography
+                            </span>
+                            <span class="tag">
+                                <i class="ph-arrow-up ph-bold"></i>
+                                Bounce
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="bounce-text">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="bounce-text">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="bounce-text">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 12 -->
+                <div class="project-card" data-category="effects" data-popularity="94" data-recent="2024-01-21">
+                    <div class="project-preview">
+                        <div class="demo-animation">
+                            <div class="neon-border-demo">
+                                <div class="neon-box">Neon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3>Borde Neón</h3>
+                            <div class="project-stats">
+                                <span class="downloads">
+                                    <i class="ph-download ph-bold"></i>
+                                    467
+                                </span>
+                                <span class="likes">
+                                    <i class="ph-heart ph-bold"></i>
+                                    94
+                                </span>
+                            </div>
+                        </div>
+                        <p>Efecto de borde neón con animación de brillo y cambio de colores RGB</p>
+                        <div class="project-tags">
+                            <span class="tag">
+                                <i class="ph-code ph-bold"></i>
+                                CSS
+                            </span>
+                            <span class="tag">
+                                <i class="ph-lightning ph-bold"></i>
+                                Neon
+                            </span>
+                            <span class="tag">
+                                <i class="ph-palette ph-bold"></i>
+                                RGB
+                            </span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="button" style="vertical-align:middle" data-project="neon-border">
+                                <span>Download</span>
+                            </button>
+                            <button class="btn-share" data-project="neon-border">
+                                <i class="ph-share ph-bold"></i>
+                            </button>
+                            <button class="btn-favorite" data-project="neon-border">
+                                <i class="ph-heart ph-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volver al inicio -->
+            <div class="back-to-home">
+                <a href="index.html" class="btn-back-home">
+                    <i class="ph-house ph-bold"></i>
+                    <span>Volver al inicio</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <i class="ph-code ph-bold"></i>
+                        <h3>ZeroTech</h3>
+                        <p>Animaciones CSS increíbles y gratuitas para tus proyectos</p>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://youtube.com/@zero_tech" target="_blank" class="social-btn youtube">
+                            <i class="ph-youtube-logo ph-bold"></i>
+                            <span>YouTube</span>
+                        </a>
+                        <a href="https://github.com/zerotech" target="_blank" class="social-btn github">
+                            <i class="ph-github-logo ph-bold"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://wa.me/1234567890" target="_blank" class="social-btn whatsapp">
+                            <i class="ph-whatsapp-logo ph-bold"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 ZeroTech. Todos los proyectos son gratuitos para uso personal y comercial.</p>
+                    <div class="footer-links">
+                        <a href="mailto:hola@zerotech.shop">
+                            <i class="ph-envelope ph-bold"></i>
+                            Contacto
+                        </a>
+                        <span>•</span>
+                        <a href="politicas-privacidad.html" target="_blank">
+                            Políticas de Privacidad
+                        </a>
+                        <span>•</span>
+                        <a href="terminos-condiciones.html" target="_blank">
+                            Términos y Condiciones
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Download Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="ph-x ph-bold"></i>
+            </button>
+            <div class="modal-header">
+                <i class="ph-download ph-bold"></i>
+                <h2>Descargar Proyecto</h2>
+            </div>
+            <div class="modal-body">
+                <div class="download-info">
+                    <h3 id="modalProjectName"></h3>
+                    <p id="modalProjectDesc"></p>
+                    <div class="download-options">
+                        <button class="download-option" data-type="html">
+                            <div class="option-icon">
+                                <i class="ph-file-code ph-bold"></i>
+                            </div>
+                            <div class="option-info">
+                                <strong>Archivo HTML</strong>
+                                <span>Descarga el archivo completo listo para usar</span>
+                            </div>
+                            <div class="option-arrow">
+                                <i class="ph-arrow-right ph-bold"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phosphor Icons Script -->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    <script src="script.js"></script>
+</body>
+</html>

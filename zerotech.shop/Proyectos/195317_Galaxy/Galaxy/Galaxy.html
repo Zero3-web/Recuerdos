@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Te amo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <style>
+    /* --- Estilos generales y responsive --- */
+    body {
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+        background: #222;
+    }
+    #particles-js {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+    #letra-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2;
+        pointer-events: none;
+        display: block;
+    }
+    #mensaje-pequeno {
+        position: absolute;
+        left: 50%;
+        top: 80%;
+        transform: translateX(-50%);
+        color: #fffbe7;
+        font-size: 1.7vw;
+        font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+        text-align: center;
+        z-index: 3;
+        text-shadow: 0 2px 8px #000;
+        opacity: 0;
+        transition: opacity 1s;
+        pointer-events: none;
+    }
+    @media (max-width: 600px) {
+        #mensaje-pequeno {
+            font-size: 6vw;
+            top: 87%;
+            padding: 0 10vw;
+        }
+        #letra-canvas {
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+        body {
+            font-size: 4vw;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <canvas id="letra-canvas"></canvas>
+    <!-- particles.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+    // --- PARTICLES.JS CONFIG ---
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 400,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": "#ff3366"
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "opacity": {
+                "value": 0.7,
+                "random": true
+            },
+            "size": {
+                "value": 3,
+                "random": true
+            },
+            "line_linked": {
+                "enable": false
+            },
+            "move": {
+                "enable": true,
+                "speed": 1,
+                "direction": "none",
+                "random": true,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": false
+                },
+                "onclick": {
+                    "enable": false
+                },
+                "resize": true
+            }
+        },
+        "retina_detect": true
+    });
+
+    // --- PARTICULAS DE FONDO Y EFECTO DE UNIÓN ---
+    const fondoParticles = [];
+    const fondoCount = 400;
+    let mouse = { x: -1000, y: -1000, radius: 120 };
+
+    document.addEventListener("mousemove", function(e) {
+        const canvas = document.getElementById("letra-canvas");
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    });
+    document.addEventListener("mouseleave", function() {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+
+    function initFondoParticles() {
+        fondoParticles.length = 0;
+        const canvas = document.getElementById("letra-canvas");
+        for (let i = 0; i < fondoCount; i++) {
+            fondoParticles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.7,
+                vy: (Math.random() - 0.5) * 0.7,
+                active: true
+            });
+        }
+    }
+
+    const galaxyColors = [
+        [173, 216, 230],
+        [186, 85, 211],
+        [255, 182, 193],
+        [72, 61, 139],
+        [255, 255, 224],
+        [0, 191, 255],
+        [255, 105, 180],
+        [138, 43, 226],
+        [255, 255, 255]
+    ];
+
+    function randomGalaxyColor() {
+        const c = galaxyColors[Math.floor(Math.random() * galaxyColors.length)];
+        return `rgb(${c[0]},${c[1]},${c[2]})`;
+    }
+
+    function animateFondoParticles(ctx, width, height) {
+        for (const p of fondoParticles) {
+            if (!p.active) continue;
+            const mdx = p.x - mouse.x;
+            const mdy = p.y - mouse.y;
+            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (mdist < mouse.radius) {
+                const force = (mouse.radius - mdist) / mouse.radius;
+                const angle = Math.atan2(mdy, mdx);
+                p.vx += Math.cos(angle) * force * 1.7;
+                p.vy += Math.sin(angle) * force * 1.7;
+            }
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            const ctxAlpha = ctx.globalAlpha;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+            if (!p.color) p.color = randomGalaxyColor();
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = 0.5;
+            ctx.fill();
+            ctx.globalAlpha = ctxAlpha;
+        }
+    }
+
+    function mostrarMensajePequeno() {
+        let mensaje = document.getElementById("mensaje-pequeno");
+        if (!mensaje) {
+            mensaje = document.createElement("div");
+            mensaje.id = "mensaje-pequeno";
+            mensaje.textContent = "gracias por ser mi todo, eres la mejor y así";
+            document.body.appendChild(mensaje);
+        }
+        mensaje.style.display = "block";
+        setTimeout(() => {
+            mensaje.style.opacity = "1";
+        }, 100);
+    }
+
+    function drawWordParticles(textos) {
+        const canvas = document.getElementById("letra-canvas");
+        const ctx = canvas.getContext("2d");
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initFondoParticles();
+        }
+        resize();
+        window.addEventListener("resize", () => {
+            resize();
+            drawWordParticles(textos);
+        }, { once: true });
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (typeof textos === "string") textos = [textos];
+
+        // Ajuste de tamaño de fuente y densidad para mobile
+        let fontSize, density, particleRadius;
+        if (window.innerWidth <= 600) {
+            fontSize = canvas.width * 0.38 / textos.length;
+            density = 4;
+            particleRadius = 2; // más pequeño en mobile
+        } else {
+            fontSize = canvas.width * 0.28 / textos.length; // más grande en desktop también
+            density = 6;
+            particleRadius = 2;
+        }
+        ctx.font = `bold ${fontSize}px Arial Rounded MT Bold, Arial, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "#fff";
+
+        const totalHeight = fontSize * textos.length * 1.1;
+        const startY = canvas.height / 2 - totalHeight / 2 + fontSize / 2;
+
+        const points = [];
+        for (let i = 0; i < textos.length; i++) {
+            const y = startY + i * fontSize * 1.1;
+            ctx.fillText(textos[i], canvas.width / 2, y);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            for (let yy = 0; yy < canvas.height; yy += density) {
+                for (let xx = 0; xx < canvas.width; xx += density) {
+                    const idx = (yy * canvas.width + xx) * 4;
+                    if (imageData.data[idx + 3] > 128) {
+                        points.push({x: xx, y: yy});
+                    }
+                }
+            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        for (let i = 0; i < textos.length; i++) {
+            const y = startY + i * fontSize * 1.1;
+            ctx.fillText(textos[i], canvas.width / 2, y);
+        }
+
+        while (fondoParticles.length < points.length) {
+            fondoParticles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: 0,
+                vy: 0,
+                active: true
+            });
+        }
+
+        for (let i = 0; i < fondoParticles.length; i++) {
+            if (i < points.length) {
+                fondoParticles[i].tx = points[i].x;
+                fondoParticles[i].ty = points[i].y;
+                fondoParticles[i].active = true;
+            } else {
+                fondoParticles[i].active = false;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let moving = false;
+            for (const p of fondoParticles) {
+                if (!p.active) continue;
+                if (typeof p.tx === "number" && typeof p.ty === "number") {
+                    const dx = p.tx - p.x;
+                    const dy = p.ty - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const mdx = p.x - mouse.x;
+                    const mdy = p.y - mouse.y;
+                    const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+                    if (mdist < mouse.radius) {
+                        const force = (mouse.radius - mdist) / mouse.radius;
+                        const angle = Math.atan2(mdy, mdx);
+                        p.vx += Math.cos(angle) * force * 1.7;
+                        p.vy += Math.sin(angle) * force * 1.7;
+                    }
+                    if (dist > 0.1) moving = true;
+                    p.vx = (p.vx || 0) + dx * 0.006;
+                    p.vy = (p.vy || 0) + dy * 0.006;
+                    p.vx *= 0.96;
+                    p.vy *= 0.96;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (!p.color) p.color = randomGalaxyColor();
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, particleRadius, 0, 2 * Math.PI); // radio ajustado
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = 1;
+                    ctx.fill();
+                }
+            }
+            if (moving) {
+                requestAnimationFrame(animate);
+            } else {
+                mostrarMensajePequeno();
+            }
+        }
+
+        let fondoFrames = 0;
+        function fondoLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            animateFondoParticles(ctx, canvas.width, canvas.height);
+            fondoFrames++;
+            if (fondoFrames < 160) {
+                requestAnimationFrame(fondoLoop);
+            } else {
+                animate();
+            }
+        }
+        fondoLoop();
+    }
+
+    function morphWordParticles(textosA, textosB, opciones = {}, onFinish) {
+        const canvas = document.getElementById("letra-canvas");
+        const ctx = canvas.getContext("2d");
+
+        function getPointsFromText(textos, fontScale = 0.18) {
+            if (typeof textos === "string") textos = [textos];
+            // Ajuste de escala y densidad para mobile
+            let scale = fontScale;
+            let density = 6;
+            if (window.innerWidth <= 600) {
+                scale = fontScale * 2.1; // mucho más grande en mobile
+                density = 4;
+            } else {
+                scale = fontScale * 1.5; // más grande en desktop
+            }
+            const fontSize = canvas.width * scale / textos.length;
+            ctx.font = `bold ${fontSize}px Arial Rounded MT Bold, Arial, sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#fff";
+            const totalHeight = fontSize * textos.length * 1.1;
+            const startY = canvas.height / 2 - totalHeight / 2 + fontSize / 2;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < textos.length; i++) {
+                const y = startY + i * fontSize * 1.1;
+                ctx.fillText(textos[i], canvas.width / 2, y);
+            }
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const points = [];
+            for (let y = 0; y < canvas.height; y += density) {
+                for (let x = 0; x < canvas.width; x += density) {
+                    const idx = (y * canvas.width + x) * 4;
+                    if (imageData.data[idx + 3] > 128) {
+                        points.push({x, y});
+                    }
+                }
+            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return points;
+        }
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initFondoParticles();
+        }
+        resize();
+        window.addEventListener("resize", () => {
+            resize();
+            morphWordParticles(textosA, textosB, opciones, onFinish);
+        }, { once: true });
+
+        const pointsA = getPointsFromText(textosA, opciones.fontScaleA || 0.18);
+        const pointsB = getPointsFromText(textosB, opciones.fontScaleB || 0.10);
+
+        const maxPoints = Math.max(pointsA.length, pointsB.length);
+        while (fondoParticles.length < maxPoints) {
+            fondoParticles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: 0,
+                vy: 0,
+                active: true,
+                color: randomGalaxyColor()
+            });
+        }
+
+        for (let i = 0; i < fondoParticles.length; i++) {
+            if (i < pointsA.length) {
+                fondoParticles[i].x = Math.random() * canvas.width;
+                fondoParticles[i].y = Math.random() * canvas.height;
+                fondoParticles[i].tx = pointsA[i].x;
+                fondoParticles[i].ty = pointsA[i].y;
+                fondoParticles[i].active = true;
+            } else {
+                fondoParticles[i].active = false;
+            }
+            fondoParticles[i].color = fondoParticles[i].color || randomGalaxyColor();
+        }
+
+        // Ajuste de radio de partícula para mobile
+        let particleRadius = window.innerWidth <= 600 ? 2 : 2;
+
+        let morphing = false;
+        function animateToA() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let moving = false;
+            for (const p of fondoParticles) {
+                if (!p.active) continue;
+                const dx = p.tx - p.x;
+                const dy = p.ty - p.y;
+                if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) moving = true;
+                const mdx = p.x - mouse.x;
+                const mdy = p.y - mouse.y;
+                const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+                if (mdist < mouse.radius) {
+                    const force = (mouse.radius - mdist) / mouse.radius;
+                    const angle = Math.atan2(mdy, mdx);
+                    p.vx += Math.cos(angle) * force * 1.7;
+                    p.vy += Math.sin(angle) * force * 1.7;
+                }
+                p.vx = (p.vx || 0) + dx * 0.006;
+                p.vy = (p.vy || 0) + dy * 0.006;
+                p.vx *= 0.96;
+                p.vy *= 0.96;
+                p.x += p.vx;
+                p.y += p.vy;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, particleRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 1;
+                ctx.fill();
+            }
+            if (moving && !morphing) {
+                requestAnimationFrame(animateToA);
+            } else if (!morphing) {
+                setTimeout(() => {
+                    morphing = true;
+                    for (let i = 0; i < fondoParticles.length; i++) {
+                        if (i < pointsB.length) {
+                            fondoParticles[i].tx = pointsB[i].x;
+                            fondoParticles[i].ty = pointsB[i].y;
+                            fondoParticles[i].active = true;
+                        } else {
+                            fondoParticles[i].active = false;
+                        }
+                    }
+                    animateToB();
+                }, 1800);
+            }
+        }
+
+        function animateToB() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let moving = false;
+            for (const p of fondoParticles) {
+                if (!p.active) continue;
+                const dx = p.tx - p.x;
+                const dy = p.ty - p.y;
+                if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) moving = true;
+                const mdx = p.x - mouse.x;
+                const mdy = p.y - mouse.y;
+                const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+                if (mdist < mouse.radius) {
+                    const force = (mouse.radius - mdist) / mouse.radius;
+                    const angle = Math.atan2(mdy, mdx);
+                    p.vx += Math.cos(angle) * force * 1.7;
+                    p.vy += Math.sin(angle) * force * 1.7;
+                }
+                p.vx = (p.vx || 0) + dx * 0.006;
+                p.vy = (p.vy || 0) + dy * 0.006;
+                p.vx *= 0.96;
+                p.vy *= 0.96;
+                p.x += p.vx;
+                p.y += p.vy;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, particleRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 1;
+                ctx.fill();
+            }
+            if (moving) {
+                requestAnimationFrame(animateToB);
+            } else if (onFinish) {
+                setTimeout(onFinish, 1000);
+            }
+        }
+
+        animateToA();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        morphWordParticles(["TE AMO", "MUCHO"], ["ERES", "LA", "MEJOR"], { fontScaleA: 0.22, fontScaleB: 0.22 });
+    });
+    </script>
+</body>
+</html>
